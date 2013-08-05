@@ -1,0 +1,27 @@
+<form class="form-vertical" name="loginForm" ng-submit="trySignin();">
+  <div class="alert" ng-show="signinError">
+    {{signinError.error}}
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="usernameInput">Username</label>
+    <div class="controls">
+      <input type="text" id="usernameInput" ng-model="credentials.username" required>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="passwordInput">Password</label>
+    <div class="controls">
+      <input type="password" id="passwordInput" ng-model="credentials.password" required>
+    </div>
+  </div>
+
+  <p>
+    <small><a href="#/retrieve-password">Forgot your password?</a></small>
+  </p>
+  <p>
+    <small><a href="#/signup">Register</a></small>
+  </p>
+
+  <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-primary">Sign-in</button>
+</form>
