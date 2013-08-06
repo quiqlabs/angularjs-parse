@@ -1,6 +1,6 @@
 <form class="form-vertical" name="loginForm" ng-submit="trySignin();">
   <div class="alert" ng-show="signinError">
-    {{signinError.error}}
+    {{signinError}}
   </div>
 
   <div class="control-group">
@@ -18,9 +18,7 @@
 
   <p>
     <small><a href="#/retrieve-password">Forgot your password?</a></small>
-  </p>
-  <p>
-    <small><a href="#/signup">Register</a></small>
+    <small><a href="#/signup">Register a new account</a></small>
   </p>
 
   <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-primary">Sign-in</button>

@@ -2,11 +2,6 @@
 
 angular.module('parseAngularjsTodolistApp')
   .factory('userService', function ($q, $http, utilsService) {
-    // Service logic
-    // ...
-
-    var meaningOfLife = 42;
-
     // Public API here
     return {
       signin: function (username, password) {

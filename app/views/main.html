@@ -1,14 +1,7 @@
 <form class="form-inline" ng-submit="createTask();">
-  <input type="text" ng-model="newTask">
-  <button type="submit" class="btn">Criar</button>
+    <input type="text" ng-model="newTask" class="input-block-level" placeholder="Create a new task">
 </form>
 
-<table class="table table-bordered" ng-show="tasks.length > 0">
-  <tr ng-repeat="task in tasks">
-    <td width="100%">
-      {{task.name}}
-      <small>{{task.createdAt | date:'mediumDate'}}</small>
-      <button type="button" class="btn btn-danger pull-right btn-mini" ng-click="removeTask(task);">Remove</button>
-    </td>
-  </tr>
-</table>
+<div class="tasks" data-tasks="tasks">
+  <div ng-repeat="task in tasks" data-task="task"></div>
+</div>

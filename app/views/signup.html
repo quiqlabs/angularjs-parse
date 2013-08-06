@@ -1,9 +1,8 @@
 <form name="signupForm" ng-submit="trySignup();">
-  <pre>{{userData | json}}</pre>
   <div class="control-group">
-    <label class="control-label">Name</label>
+    <label class="control-label">Complete name</label>
     <div class="controls">
-      <input type="text" ng-model="userData.name" placeholder="Complete name" required>
+      <input type="text" ng-model="userData.name" required>
     </div>
   </div>
   <div class="control-group">
@@ -24,5 +23,8 @@
       <input type="email" ng-model="userData.email" required>
     </div>
   </div>
+  <p>
+    <a href="#/" title="">I already have an account.</a>
+  </p>
   <button type="submit" ng-disabled="signupForm.$invalid" class="btn btn-primary">Sign-up</button>
 </form>

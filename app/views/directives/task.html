@@ -1,0 +1,38 @@
+<div class="task" ng-class="{ 'important': task.important }" ng-dblclick="editTask(task);">
+  <div class="task-actions pull-right" ng-hide="task.editing">
+    <button type="button" class="btn btn-danger btn-mini" ng-click="removeTask(task);">Remove</button>
+    <button type="button" class="btn btn-info btn-mini" ng-click="editTask(task);">Edit</button>
+  </div>
+
+  <div class="task-content" ng-hide="task.editing">
+    <strong class="task-name" >{{task.name}}</strong>
+    <small class="task-created-at">{{task.createdAt | date:'mediumDate'}}</small>
+    <p ng-bind="task.description" ng-show="task.description"></p>
+  </div>
+
+  <div class="task-content" ng-show="task.editing">
+    <form name="editTaskForm" class="form-horizontal">
+      <div class="pull-right">
+        <a href="" ng-click="editMode(task, false);">Cancel</a>
+        <button type="submit" class="btn btn-info pull-right btn-mini" ng-click="commitTask(task);">Done</button>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Task name:</label>
+        <div class="controls">
+          <input type="text" ng-model="task.name">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Task name:</label>
+        <div class="controls">
+          <input type="text" ng-model="task.name">
+        </div>
+      </div>
+
+      <textarea ng-model="task.description"></textarea>
+      <input type="checkbox" ng-model="task.important">
+    </form>
+  </div>
+</div>

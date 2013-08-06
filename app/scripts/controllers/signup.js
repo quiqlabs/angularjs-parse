@@ -3,10 +3,10 @@
 angular.module('parseAngularjsTodolistApp')
   .controller('SignupCtrl', function ($scope, $location, userService) {
     $scope.userData = {
-      username: 'WilliamLepinski',
-      password: 'william',
-      name: 'William Lepinski',
-      email: 'willsp@gmail.com'
+      username: '',
+      password: '',
+      name: '',
+      email: ''
     };
 
     $scope.trySignup = function() {

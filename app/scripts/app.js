@@ -1,31 +1,44 @@
 'use strict';
 
-angular.module('parseAngularjsTodolistApp', [])
+angular.module('parseAngularjsTodolistApp', ['ngCookies'])
   .constant('parseApplicationId', 'bIpl0QzeqZA0LvacAmaxTTxRU3bOyA50chrYTdTe')
   .constant('parseRestApiKey', 'JiUZcXGQ8LHt5R7OHRteKrOTPt03D3X7OqvyYw5N')
-  .config(function($httpProvider, parseApplicationId, parseRestApiKey){
-    $httpProvider.defaults.headers.common['X-Parse-Application-Id'] = parseApplicationId;
-    $httpProvider.defaults.headers.common['X-Parse-REST-API-Key'] = parseRestApiKey;
+  .factory('authenticationHttpInterceptor', function($q, appSession, parseApplicationId, parseRestApiKey){
+    return {
+      request: function (config) {
+        config.headers['X-Parse-Application-Id'] = parseApplicationId;
+        config.headers['X-Parse-REST-API-Key'] = parseRestApiKey;
 
-    $httpProvider.defaults.transformResponse = function(data) {
-      var ret;
+        var user = appSession.getUser();
+        if (user) {
+          config.headers['X-Parse-Session-Token'] = user.sessionToken;
 
-      try {
-        data = JSON.parse(data);
-
-        if (angular.isObject(data) && ('results' in data)) {
-          ret = data.results;
+          if (config.method === 'POST') {
+            if (!('ACL' in config.data)) {
+              config.data.ACL = {};
+            }
+            // Adding the access control list for the current request
+            config.data.ACL[user.objectId] = { read: true, write: true };
+          }
         }
-        else {
-          ret = data;
-        }
-      }
-      catch(e){
-        ret = data;
-      }
-
-      return ret;
+        return config || $q.when(config);
+      },
     };
+  })
+  .factory('resultsHttpInterceptor', function($q){
+    return {
+      response: function (response) {
+        if (angular.isObject(response.data) && ('results' in response.data)) {
+          response.data = response.data.results;
+        }
+
+        return response || $q.when(response);
+      },
+    };
+  })
+  .config(function($httpProvider){
+    $httpProvider.interceptors.push('authenticationHttpInterceptor');
+    $httpProvider.interceptors.push('resultsHttpInterceptor');
   })
   .config(function ($routeProvider) {
     $routeProvider
@@ -48,7 +61,7 @@ angular.module('parseAngularjsTodolistApp', [])
   })
   .run(function($rootScope, $location, appSession){
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous){
-      if (current.restricted && !appSession.user) {
+      if (current.restricted && !appSession.getUser()) {
         console.debug('User not authenticated');
         $location.path('/signin');
       }
