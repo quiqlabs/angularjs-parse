@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('parseAngularjsTodolistApp', ['ngCookies'])
+angular.module('parseAngularjsTodolistApp', ['ngCookies', 'ngRoute'])
   .constant('parseApplicationId', 'bIpl0QzeqZA0LvacAmaxTTxRU3bOyA50chrYTdTe')
   .constant('parseRestApiKey', 'JiUZcXGQ8LHt5R7OHRteKrOTPt03D3X7OqvyYw5N')
   .factory('authenticationHttpInterceptor', function($q, appSession, parseApplicationId, parseRestApiKey){
